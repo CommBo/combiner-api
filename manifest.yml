@@ -1,0 +1,5 @@
+applications:
+  - name: combiner-api
+    memory: 64M
+    stack: cflinuxfs2
+    command: python combiner_api/__main__.py
