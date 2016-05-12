@@ -96,3 +96,61 @@ def get_predix_pedestrian(client):
     #with open(pedestrian_path, 'r') as demo_file:
     #    res = json.load(demo_file)
     raise tornado.gen.Return(res)
+
+@tornado.gen.coroutine
+def static_get_predix_traffic_data(client):
+    reqs = []
+    for asset_id in ASSET_ID_LIST:
+        url = TRAFFIC_URL.format(asset_id)
+        param1 = urllib.urlencode({'event-types': 'TFEVT'})
+        param2 = urllib.urlencode({'start-ts': START_TIME})
+        param3 = urllib.urlencode({'end-ts': END_TIME})
+        url = url + '?' + param1 + '&' + param2 + '&' + param3
+        req = tornado.httpclient.HTTPRequest(url,
+                                             headers={'Authorization': 'bearer ' + TOKEN,
+                                                      'Predix-Zone-Id': TRAFFIC_ZONE_ID},
+                                             request_timeout=100)
+        reqs.append(client.fetch(req))
+
+    traffic_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'traffic.txt')
+    with open(traffic_path, 'r') as demo_file:
+        res = json.load(demo_file)
+    raise tornado.gen.Return(res)
+
+@tornado.gen.coroutine
+def static_get_predix_parking(client):
+    reqs = []
+    for asset_id in ASSET_ID_LIST:
+        url = PARKING_URL.format(asset_id)
+        param1 = urllib.urlencode({'event-types': 'PKIN,PKOUT'})
+        param2 = urllib.urlencode({'start-ts': START_TIME})
+        param3 = urllib.urlencode({'end-ts': END_TIME})
+        url = url + '?' + param1 + '&' + param2 + '&' + param3
+        req = tornado.httpclient.HTTPRequest(url,
+                                             headers={'Authorization': 'bearer ' + TOKEN,
+                                                      'Predix-Zone-Id': PARKING_ZONE_ID},
+                                             request_timeout=100)
+        reqs.append(client.fetch(req))
+    parking_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'parking.txt')
+    with open(parking_path, 'r') as demo_file:
+        res = json.load(demo_file)
+    raise tornado.gen.Return(res)
+
+@tornado.gen.coroutine
+def static_get_predix_pedestrian(client):
+    reqs = []
+    for asset_id in ASSET_ID_LIST:
+        url = PEDESTRIAN_URL.format(asset_id)
+        param1 = urllib.urlencode({'event-types': 'SFIN,SFOUT'})
+        param2 = urllib.urlencode({'start-ts': START_TIME})
+        param3 = urllib.urlencode({'end-ts': END_TIME})
+        url = url + '?' + param1 + '&' + param2 + '&' + param3
+        req = tornado.httpclient.HTTPRequest(url,
+                                             headers={'Authorization': 'bearer ' + TOKEN,
+                                                      'Predix-Zone-Id': PEDESTRIAN_ZONE_ID},
+                                             request_timeout=100)
+        reqs.append(client.fetch(req))
+    pedestrian_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'pedestrian.txt')
+    with open(pedestrian_path, 'r') as demo_file:
+        res = json.load(demo_file)
+    raise tornado.gen.Return(res)

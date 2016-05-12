@@ -1,6 +1,6 @@
 import tornado.web
 import tornado.ioloop
-from combiner_api.handlers import BaseHandler, DistrictHandler, PostalHandler, PBDemographicsHandler, PBSegmentationHandler, PredixTrafficHandler, PredixParkingHandler, PredixPedestrianHandler, get_token
+from combiner_api.handlers import BaseHandler, DistrictHandler, PostalHandler, PBDemographicsHandler, PBSegmentationHandler, PredixTrafficHandler, PredixParkingHandler, PredixPedestrianHandler, PredixStaticTrafficHandler, PredixStaticParkingHandler, PredixStaticPedestrianHandler, get_token
 import os
 
 ROUTES = [
@@ -11,7 +11,10 @@ ROUTES = [
     (r'/segmentation', PBSegmentationHandler),
     (r'/traffic', PredixTrafficHandler),
     (r'/parking', PredixParkingHandler),
-    (r'/pedestrian', PredixPedestrianHandler)
+    (r'/pedestrian', PredixPedestrianHandler),
+    (r'/static/traffic', PredixStaticTrafficHandler),
+    (r'/static/parking', PredixStaticParkingHandler),
+    (r'/static/pedestrian', PredixStaticPedestrianHandler),
     ]
 
 def make_app():

@@ -94,3 +94,25 @@ class PBSegmentationHandler(BaseHandler):
         resp = yield pitney.lat_lon_to_segmentation(lat, lon, client, token)
         self.write(json.dumps(resp))
         self.finish()
+
+class PredixStaticParkingHandler(BaseHandler):
+    @tornado.gen.coroutine
+    def get(self):
+        res = yield predix.static_get_predix_parking(client)
+        self.write(json.dumps(res))
+        self.finish()
+
+class PredixStaticPedestrianHandler(BaseHandler):
+    @tornado.gen.coroutine
+    def get(self):
+        res = yield predix.static_get_predix_pedestrian(client)
+        self.write(json.dumps(res))
+        self.finish()
+
+class PredixStaticTrafficHandler(BaseHandler):
+    @tornado.gen.coroutine
+    def get(self):
+        res = yield predix.static_get_predix_traffic_data(client)
+        self.write(json.dumps(res))
+        self.finish()
+
