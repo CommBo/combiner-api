@@ -47,13 +47,12 @@ def get_predix_traffic_data(client):
                                                       'Predix-Zone-Id': TRAFFIC_ZONE_ID},
                                              request_timeout=100)
         reqs.append(client.fetch(req))
-    # res = yield reqs
-    # res = [json.loads(thing.body) for thing in res if thing.body]
+    res = yield reqs
+    res = [json.loads(thing.body) for thing in res if thing.body]
 
-    # for demo, do not make the network call
-    traffic_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'traffic.txt')
-    with open(traffic_path, 'r') as demo_file:
-        res = json.load(demo_file)
+    #traffic_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'traffic.txt')
+    #with open(traffic_path, 'r') as demo_file:
+    #    res = json.load(demo_file)
     raise tornado.gen.Return(res)
 
 @tornado.gen.coroutine
@@ -70,11 +69,11 @@ def get_predix_parking(client):
                                                       'Predix-Zone-Id': PARKING_ZONE_ID},
                                              request_timeout=100)
         reqs.append(client.fetch(req))
-    # res = yield reqs
-    # res = [json.loads(thing.body) for thing in res if thing.body]
-    parking_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'parking.txt')
-    with open(parking_path, 'r') as demo_file:
-        res = json.load(demo_file)
+    res = yield reqs
+    res = [json.loads(thing.body) for thing in res if thing.body]
+    #parking_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'parking.txt')
+    #with open(parking_path, 'r') as demo_file:
+    #    res = json.load(demo_file)
     raise tornado.gen.Return(res)
 
 @tornado.gen.coroutine
@@ -91,9 +90,9 @@ def get_predix_pedestrian(client):
                                                       'Predix-Zone-Id': PEDESTRIAN_ZONE_ID},
                                              request_timeout=100)
         reqs.append(client.fetch(req))
-    # res = yield reqs
-    # res = [json.loads(thing.body) for thing in res if thing.body]
-    pedestrian_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'pedestrian.txt')
-    with open(pedestrian_path, 'r') as demo_file:
-        res = json.load(demo_file)
+    res = yield reqs
+    res = [json.loads(thing.body) for thing in res if thing.body]
+    #pedestrian_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(__file__), os.pardir)), 'pedestrian.txt')
+    #with open(pedestrian_path, 'r') as demo_file:
+    #    res = json.load(demo_file)
     raise tornado.gen.Return(res)
