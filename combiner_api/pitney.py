@@ -11,6 +11,8 @@ TOKEN_URL = 'https://api.pitneybowes.com/oauth/token'
 BASE_API_URL = 'https://api.pitneybowes.com/location-intelligence'
 GEOENHANCE_PATH = '/geoenhance/v1/address/bylocation'
 GEOLIFE_PATH = '/geolife/v1/demographics/bylocation'
+GEOLIFE_SEGMENT_PATH = '/geolife/v1/segmentation/bylocation'
+GEOCODE_PATH = '/geocode-service/b1/transient/basic/geocode'
 
 @tornado.gen.coroutine
 def get_token(client):
@@ -45,5 +47,31 @@ def lat_lon_to_demographics(lat, lon, client, token):
                                          method='GET',
                                          headers={'Authorization': 'Bearer ' + token})
     res = yield client.fetch(req)
-    raise tornado.gen.Return(res.body)
+    raise tornado.gen.Return(json.loads(res.body))
 
+@tornado.gen.coroutine
+def lat_lon_to_segmentation(lat, lon, client, token):
+    url = BASE_API_URL + GEOLIFE_SEGMENT_PATH
+    query_params = urllib.urlencode({
+        'latitude': lat,
+        'longitude': lon
+    })
+    url = url + '?' + query_params
+    req = tornado.httpclient.HTTPRequest(url,
+                                         method='GET',
+                                         headers={'Authorization': 'Bearer ' + token})
+    res = yield client.fetch(req)
+    raise tornado.gen.Return(json.loads(res.body))
+
+@tornado.gen.coroutine
+def postal_code_to_lat_lon(postal_code, client, token):
+    url = BASE_API_URL + GEOCODE_PATH
+    query_params = urllib.urlencode({
+        'mainAddress': postal_code
+    })
+    url = url + '?' + query_params
+    req = tornado.httpclient.HTTPRequest(url,
+                                         method='GET',
+                                         headers={'Authorization': 'Bearer ' + token})
+    res = yield client.fetch(req)
+    raise tornado.gen.Return(res.body)
